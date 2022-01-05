@@ -1,1 +1,1 @@
-# crypto-scrapper
+# crypto-scraper

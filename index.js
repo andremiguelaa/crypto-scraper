@@ -68,13 +68,18 @@ const getData = (date) =>
       });
       const nextDate = moment(date).add(1, "days");
       if (nextDate < moment().startOf("day")) {
-        getData(nextDate.format("YYYY-MM-DD"));
+        setTimeout(() => {
+          getData(nextDate.format("YYYY-MM-DD"));
+        }, 2000);
       } else {
         createCSV(historicalData);
       }
     })
     .catch((err) => {
       console.log(err);
+      setTimeout(() => {
+        getData(date);
+      }, 60000);
     });
 
 getData(FIRST_DATE);
