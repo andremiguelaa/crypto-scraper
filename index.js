@@ -16,8 +16,13 @@ const createCSV = (historicalData) => {
     let priceRow = [currentDate];
     let dominanceRow = [currentDate];
     cryptoList.forEach((coin) => {
-      priceRow.push(historicalData[coin][currentDate].price);
-      dominanceRow.push(historicalData[coin][currentDate].dominance);
+      if (historicalData[coin][currentDate]) {
+        priceRow.push(historicalData[coin][currentDate].price);
+        dominanceRow.push(historicalData[coin][currentDate].dominance);
+      } else {
+        priceRow.push("");
+        dominanceRow.push("");
+      }
     });
     priceRows.push(priceRow);
     dominanceRows.push(dominanceRow);
@@ -68,9 +73,7 @@ const getData = (date) =>
       });
       const nextDate = moment(date).add(1, "days");
       if (nextDate < moment().startOf("day")) {
-        setTimeout(() => {
-          getData(nextDate.format("YYYY-MM-DD"));
-        }, 2000);
+        getData(nextDate.format("YYYY-MM-DD"));
       } else {
         createCSV(historicalData);
       }
